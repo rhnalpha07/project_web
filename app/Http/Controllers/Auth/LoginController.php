@@ -28,11 +28,15 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
             
-            // Redirect admin to admin dashboard, regular users to books
-            if (Auth::user()->isAdmin()) {
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('books.index');
+            try {
+                if (Auth::user()->isAdmin()) {
+                    return redirect()->route('admin.dashboard');
+                } else {
+                    return redirect()->route('books.index');
+                }
+            } catch (\Exception $e) {
+                // Log the error or fallback to a default page
+                return redirect()->route('books.index')->withErrors(['error' => 'An error occurred during login redirection. Please try again.']);
             }
         }
 

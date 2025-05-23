@@ -50,6 +50,16 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
     public function isAdmin()
     {
         return $this->role && $this->role->slug === 'admin';

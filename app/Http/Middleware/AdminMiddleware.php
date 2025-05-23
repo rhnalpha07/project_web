@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!Auth::check() || !Auth::user()->isAdmin()) {
-            return redirect('/books');
+            return redirect()->route('home')->with('error', 'Unauthorized access. Admin privileges required.');
         }
 
         return $next($request);

@@ -12,8 +12,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            RoleSeeder::class,
+            AdminSeeder::class, // This will create both admin and user roles
             CategorySeeder::class,
+            GenreSeeder::class,
+            BookSeeder::class,
         ]);
     }
 }

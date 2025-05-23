@@ -16,14 +16,16 @@ return new class extends Migration
             $table->string('title');
             $table->string('author');
             $table->text('description');
-            $table->string('isbn')->unique();
+            $table->string('isbn')->unique()->nullable();
             $table->decimal('price', 10, 2);
+            $table->integer('stock')->default(0);
             $table->string('cover_image')->nullable();
-            $table->string('publisher');
-            $table->date('publication_date');
-            $table->integer('pages');
-            $table->string('language');
+            $table->string('publisher')->nullable();
+            $table->date('publication_date')->nullable();
+            $table->integer('pages')->nullable();
+            $table->string('language')->default('English');
             $table->boolean('is_featured')->default(false);
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -3,199 +3,165 @@
 @section('title', 'Book Categories')
 
 @section('content')
-    <!-- Category Header -->
-    <div class="bg-light p-4 rounded-3 mb-5">
-        <div class="row align-items-center">
-            <div class="col-md-12 text-center">
-                <h1 class="display-5 fw-bold">Book Categories</h1>
-                <p class="lead">Discover our extensive collection organized by categories</p>
-            </div>
+<div class="bg-gray-900 text-gray-100 min-h-screen py-8">
+    <div class="container mx-auto px-4">
+        <!-- Category Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-amber-500 mb-3">Book Categories</h1>
+            <p class="text-xl text-gray-400">Discover our extensive collection organized by categories</p>
         </div>
-    </div>
 
-    <!-- Main Categories Section -->
-    <div class="row mb-5">
-        <div class="col-12 mb-4">
-            <h2 class="border-bottom pb-2">All Categories</h2>
-        </div>
-        @foreach($categories as $category)
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm hover-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="icon-wrapper me-3">
-                            <i class="fas fa-bookmark text-primary"></i>
+        <!-- Main Categories Section -->
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">All Categories</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($categories as $category)
+                <div class="bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-amber-500 rounded-full p-3 mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-amber-500">{{ $category->name }}</h3>
                         </div>
-                        <h3 class="card-title mb-0">{{ $category->name }}</h3>
-                    </div>
-                    <p class="card-text">{{ $category->description }}</p>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="badge bg-light text-dark rounded-pill">
-                            <i class="fas fa-book me-1"></i> {{ $category->books_count }} books
-                        </span>
-                        <a href="{{ route('categories.show', $category->id) }}" class="btn btn-primary">
-                            Browse Books <i class="fas fa-arrow-right ms-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-
-    <!-- Featured Categories with Images -->
-    <section class="mt-5 pt-4 border-top">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2 class="border-bottom pb-2">Featured Categories</h2>
-            </div>
-        </div>
-        <div class="row">
-            @foreach($featuredCategories as $category)
-            <div class="col-md-6 mb-4">
-                <div class="card bg-dark text-white overflow-hidden hover-card">
-                    @if($category->image)
-                        <img src="{{ asset('storage/' . $category->image) }}" class="card-img" alt="{{ $category->name }}" style="height: 250px; object-fit: cover; opacity: 0.7;">
-                    @else
-                        <div class="bg-secondary" style="height: 250px;"></div>
-                    @endif
-                    <div class="card-img-overlay d-flex flex-column justify-content-end" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
-                        <h3 class="card-title">{{ $category->name }}</h3>
-                        <p class="card-text">{{ $category->description }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="badge bg-primary rounded-pill">
-                                <i class="fas fa-book me-1"></i> {{ $category->books_count }} books
+                        <p class="text-gray-400 mb-6">{{ $category->description }}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-gray-700 text-amber-400 text-xs font-medium px-3 py-1.5 rounded-full flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                {{ $category->books_count }} books
                             </span>
-                            <a href="{{ route('categories.show', $category->id) }}" class="btn btn-light">
-                                Explore <i class="fas fa-arrow-right ms-1"></i>
+                            <a href="{{ route('categories.show', $category->id) }}" class="inline-flex items-center px-4 py-2 bg-amber-500 hover:bg-amber-600 text-gray-900 font-medium rounded-md transition-colors">
+                                Browse Books
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
                             </a>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
-    </section>
 
-    <!-- Popular Categories -->
-    <section class="mt-5 pt-4 border-top">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2 class="border-bottom pb-2">Popular Categories</h2>
-            </div>
-        </div>
-        <div class="row">
-            @foreach($popularCategories as $category)
-            <div class="col-md-3 mb-4">
-                <div class="card text-center h-100 shadow-sm hover-card">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <div class="icon-wrapper-lg mx-auto">
-                                <i class="fas fa-book fa-2x text-primary"></i>
-                            </div>
+        <!-- Featured Categories with Images -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Featured Categories</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @foreach($featuredCategories as $category)
+                <div class="relative overflow-hidden rounded-lg shadow-lg group">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-70 z-10"></div>
+                    @if($category->image)
+                        <img src="{{ asset('storage/' . $category->image) }}" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105" alt="{{ $category->name }}">
+                    @else
+                        <div class="bg-gray-700 w-full h-64"></div>
+                    @endif
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-20">
+                        <h3 class="text-2xl font-bold text-amber-500 mb-2">{{ $category->name }}</h3>
+                        <p class="text-gray-300 mb-4">{{ $category->description }}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-amber-500 text-gray-900 text-xs font-medium px-3 py-1.5 rounded-full flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                {{ $category->books_count }} books
+                            </span>
+                            <a href="{{ route('categories.show', $category->id) }}" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-white text-gray-900 font-medium rounded-md transition-colors">
+                                Explore
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
                         </div>
-                        <h4 class="card-title">{{ $category->name }}</h4>
-                        <p class="card-text text-muted">{{ $category->books_count }} books available</p>
-                        <a href="{{ route('categories.show', $category->id) }}" class="btn btn-outline-primary mt-2">
-                            View Books <i class="fas fa-arrow-right ms-1"></i>
-                        </a>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
-        </div>
-    </section>
+        </section>
 
-    <!-- Category Statistics -->
-    <section class="mt-5 pt-4 bg-light p-4 rounded border-top">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2 class="border-bottom pb-2">Category Statistics</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 mb-4">
-                <div class="card border-0 bg-white h-100 shadow-sm hover-card">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
-                            <div class="icon-wrapper-lg mx-auto">
-                                <i class="fas fa-tags fa-2x text-primary"></i>
-                            </div>
+        <!-- Popular Categories -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Popular Categories</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                @foreach($popularCategories as $category)
+                <div class="bg-gray-800 rounded-lg text-center shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
+                    <div class="flex justify-center mb-4">
+                        <div class="bg-amber-500 bg-opacity-20 rounded-full p-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
                         </div>
-                        <h3 class="text-primary mb-0">{{ $totalCategories }}</h3>
-                        <p class="text-muted">Total Categories</p>
                     </div>
+                    <h4 class="text-lg font-bold text-amber-500 mb-2">{{ $category->name }}</h4>
+                    <p class="text-gray-400 mb-4">{{ $category->books_count }} books available</p>
+                    <a href="{{ route('categories.show', $category->id) }}" class="inline-flex items-center px-4 py-2 border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-gray-900 font-medium rounded-md transition-colors">
+                        View Books
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
                 </div>
+                @endforeach
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="card border-0 bg-white h-100 shadow-sm hover-card">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
-                            <div class="icon-wrapper-lg mx-auto">
-                                <i class="fas fa-book fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-primary mb-0">{{ $totalBooks }}</h3>
-                        <p class="text-muted">Total Books</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card border-0 bg-white h-100 shadow-sm hover-card">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
-                            <div class="icon-wrapper-lg mx-auto">
-                                <i class="fas fa-chart-bar fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-primary mb-0">{{ $avgBooksPerCategory }}</h3>
-                        <p class="text-muted">Avg. Books per Category</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card border-0 bg-white h-100 shadow-sm hover-card">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
-                            <div class="icon-wrapper-lg mx-auto">
-                                <i class="fas fa-crown fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-primary mb-0">{{ $mostPopularCategory }}</h3>
-                        <p class="text-muted">Most Popular Category</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-@endsection
+        </section>
 
-@section('styles')
-<style>
-    .hover-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hover-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-    }
-    .icon-wrapper {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: rgba(var(--bs-primary-rgb), 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .icon-wrapper-lg {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background-color: rgba(var(--bs-primary-rgb), 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-</style>
+        <!-- Category Statistics -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Category Statistics</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
+                    <div class="flex justify-center mb-4">
+                        <div class="bg-amber-500 bg-opacity-20 rounded-full p-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-amber-500 mb-1">{{ $totalCategories }}</h3>
+                    <p class="text-gray-400">Total Categories</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
+                    <div class="flex justify-center mb-4">
+                        <div class="bg-amber-500 bg-opacity-20 rounded-full p-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-amber-500 mb-1">{{ $totalBooks }}</h3>
+                    <p class="text-gray-400">Total Books</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
+                    <div class="flex justify-center mb-4">
+                        <div class="bg-amber-500 bg-opacity-20 rounded-full p-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-amber-500 mb-1">{{ $avgBooksPerCategory }}</h3>
+                    <p class="text-gray-400">Avg. Books per Category</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
+                    <div class="flex justify-center mb-4">
+                        <div class="bg-amber-500 bg-opacity-20 rounded-full p-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-amber-500 mb-1">{{ $mostPopularCategory }}</h3>
+                    <p class="text-gray-400">Most Popular Category</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 @endsection 

@@ -3,203 +3,88 @@
 @section('title', $book->title)
 
 @section('content')
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('books.index') }}">Books</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ $book->title }}</li>
-        </ol>
-    </nav>
-
-    <div class="row">
-        <!-- Book Image -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                @if($book->cover_image)
-                    <div style="height: 400px; background-color: #f8f9fa; overflow: hidden;">
-                        <img src="{{ asset('storage/' . $book->cover_image) }}" class="card-img-top" alt="{{ $book->title }}" 
-                            style="height: 100%; width: 100%; object-fit: contain; object-position: center; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
-                    </div>
-                @else
-                    <div style="height: 400px;">
-                        <x-book-cover-placeholder :title="$book->title" :author="$book->author" />
-                    </div>
-                @endif
-                <div class="card-body">
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary">Add to Cart</button>
-                        <button class="btn btn-outline-primary">Add to Wishlist</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Book Details -->
-        <div class="col-md-8">
-            <h1 class="mb-3">{{ $book->title }}</h1>
-            
-            <div class="mb-4">
-                <h5 class="text-muted">By {{ $book->author }}</h5>
-                <div class="d-flex align-items-center mb-3">
-                    <div class="me-3">
-                        <span class="h3 text-primary mb-0">${{ number_format($book->price, 2) }}</span>
-                    </div>
-                    <div class="badge bg-success">In Stock</div>
-                </div>
+<div class="bg-gray-900 text-gray-100 min-h-screen py-8">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Back Button -->
+            <div class="mb-6">
+                <a href="{{ route('books.index') }}" class="inline-flex items-center text-gray-400 hover:text-amber-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Books
+                </a>
             </div>
 
-            <!-- Book Information Tabs -->
-            <ul class="nav nav-tabs mb-3" id="bookTabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="description-tab" data-bs-toggle="tab" href="#description" role="tab">
-                        Description
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="details-tab" data-bs-toggle="tab" href="#details" role="tab">
-                        Details
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab">
-                        Reviews
-                    </a>
-                </li>
-            </ul>
-
-            <div class="tab-content" id="bookTabsContent">
-                <!-- Description Tab -->
-                <div class="tab-pane fade show active" id="description" role="tabpanel">
-                    <div class="p-4 bg-light rounded">
-                        {{ $book->description }}
+            <!-- Book Details -->
+            <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <div class="md:flex">
+                    <!-- Book Cover -->
+                    <div class="md:w-1/3">
+                        <img src="{{ $book->cover_url }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
                     </div>
-                </div>
 
-                <!-- Details Tab -->
-                <div class="tab-pane fade" id="details" role="tabpanel">
-                    <div class="p-4 bg-light rounded">
-                        <table class="table table-borderless">
-                            <tr>
-                                <th style="width: 200px">ISBN:</th>
-                                <td>{{ $book->isbn }}</td>
-                            </tr>
-                            <tr>
-                                <th>Publisher:</th>
-                                <td>{{ $book->publisher }}</td>
-                            </tr>
-                            <tr>
-                                <th>Publication Date:</th>
-                                <td>{{ $book->publication_date->format('F d, Y') }}</td>
-                            </tr>
-                            <tr>
-                                <th>Pages:</th>
-                                <td>{{ $book->pages }}</td>
-                            </tr>
-                            <tr>
-                                <th>Language:</th>
-                                <td>{{ $book->language }}</td>
-                            </tr>
-                            <tr>
-                                <th>Categories:</th>
-                                <td>
-                                    @foreach($book->categories as $category)
-                                        <span class="badge bg-secondary me-1">{{ $category->name }}</span>
-                                    @endforeach
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Reviews Tab -->
-                <div class="tab-pane fade" id="reviews" role="tabpanel">
-                    <div class="p-4 bg-light rounded">
-                        <!-- Review Form -->
-                        <div class="mb-4">
-                            <h4>Write a Review</h4>
-                            <form action="{{ route('books.reviews.store', $book->id) }}" method="POST">
-                                @csrf
-                                <div class="mb-3">
-                                    <label class="form-label">Rating</label>
-                                    <select class="form-select" name="rating" required>
-                                        <option value="5">5 Stars</option>
-                                        <option value="4">4 Stars</option>
-                                        <option value="3">3 Stars</option>
-                                        <option value="2">2 Stars</option>
-                                        <option value="1">1 Star</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Your Review</label>
-                                    <textarea class="form-control" name="comment" rows="4" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit Review</button>
-                            </form>
+                    <!-- Book Info -->
+                    <div class="md:w-2/3 p-6">
+                        <h1 class="text-3xl font-bold text-amber-500 mb-2">{{ $book->title }}</h1>
+                        <p class="text-xl text-gray-400 mb-4">by {{ $book->author }}</p>
+                        
+                        <div class="mb-6">
+                            <h2 class="text-lg font-semibold text-gray-200 mb-2">Description</h2>
+                            <p class="text-gray-400">{{ $book->description }}</p>
                         </div>
 
-                        <!-- Existing Reviews -->
-                        <div class="reviews-list">
-                            @forelse($book->reviews as $review)
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <div>
-                                            <h5 class="card-title mb-0">{{ $review->user->name }}</h5>
-                                            <small class="text-muted">{{ $review->created_at->format('M d, Y') }}</small>
-                                        </div>
-                                        <div class="text-warning">
-                                            @for($i = 1; $i <= 5; $i++)
-                                                @if($i <= $review->rating)
-                                                    ★
-                                                @else
-                                                    ☆
-                                                @endif
-                                            @endfor
-                                        </div>
-                                    </div>
-                                    <p class="card-text">{{ $review->comment }}</p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-400">Category</h3>
+                                <p class="text-gray-200">{{ $book->category->name }}</p>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-400">Genre</h3>
+                                <p class="text-gray-200">{{ $book->genre->name }}</p>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-400">ISBN</h3>
+                                <p class="text-gray-200">{{ $book->isbn }}</p>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-400">Published Year</h3>
+                                <p class="text-gray-200">{{ $book->published_year }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Price and Actions -->
+                        <div class="border-t border-gray-700 pt-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-2xl font-bold text-amber-500">${{ number_format($book->price, 2) }}</span>
+                                </div>
+                                <div class="space-x-4">
+                                    <form action="{{ route('cart.add', $book->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                                            </svg>
+                                            Add to Cart
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('transactions.buy', $book->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-900 bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                            </svg>
+                                            Buy Now
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                            @empty
-                            <div class="alert alert-info">
-                                No reviews yet. Be the first to review this book!
-                            </div>
-                            @endforelse
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Related Books -->
-    <section class="mt-5">
-        <h3 class="mb-4">Related Books</h3>
-        <div class="row">
-            @foreach($relatedBooks as $relatedBook)
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    @if($relatedBook->cover_image)
-                        <div style="height: 200px; background-color: #f8f9fa; overflow: hidden;">
-                            <img src="{{ asset('storage/' . $relatedBook->cover_image) }}" class="card-img-top" alt="{{ $relatedBook->title }}" 
-                                style="height: 100%; width: 100%; object-fit: contain; object-position: center; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
-                        </div>
-                    @else
-                        <div style="height: 200px;">
-                            <x-book-cover-placeholder :title="$relatedBook->title" :author="$relatedBook->author" />
-                        </div>
-                    @endif
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $relatedBook->title }}</h5>
-                        <p class="card-text"><small class="text-muted">By {{ $relatedBook->author }}</small></p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="h5 mb-0">${{ number_format($relatedBook->price, 2) }}</span>
-                            <a href="{{ route('books.show', $relatedBook->id) }}" class="btn btn-outline-primary btn-sm">View</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </section>
+</div>
 @endsection 
