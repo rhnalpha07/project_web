@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
                     </svg>
-                    Back to Books
+                    Kembali ke Daftar Buku
                 </a>
             </div>
 
@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Storage;
                             @endif
                             @if($book->is_featured)
                                 <div class="absolute top-4 -left-2 bg-amber-500 text-gray-900 py-1 px-4 font-semibold shadow-lg transform -rotate-3">
-                                    Featured
+                                    Unggulan
                                 </div>
                             @endif
                         </div>
@@ -49,7 +49,7 @@ use Illuminate\Support\Facades\Storage;
                     <!-- Book Info -->
                     <div class="md:w-2/3 p-8">
                         <h1 class="text-4xl font-bold text-amber-500 mb-2">{{ $book->title }}</h1>
-                        <p class="text-xl text-gray-300 mb-6">by <span class="font-medium">{{ $book->author }}</span></p>
+                        <p class="text-xl text-gray-300 mb-6">oleh <span class="font-medium">{{ $book->author }}</span></p>
                         
                         <div class="flex flex-wrap gap-3 mb-6">
                             @foreach($book->categories as $category)
@@ -65,7 +65,7 @@ use Illuminate\Support\Facades\Storage;
                         </div>
                         
                         <div class="mb-8">
-                            <h2 class="text-xl font-semibold text-gray-200 mb-3">Description</h2>
+                            <h2 class="text-xl font-semibold text-gray-200 mb-3">Deskripsi</h2>
                             <p class="text-gray-300 leading-relaxed">{{ $book->description }}</p>
                         </div>
 
@@ -75,24 +75,24 @@ use Illuminate\Support\Facades\Storage;
                                 <p class="text-gray-200 font-mono">{{ $book->isbn }}</p>
                             </div>
                             <div class="bg-gray-700 bg-opacity-40 p-3 rounded-lg">
-                                <h3 class="text-sm font-medium text-gray-400">Publisher</h3>
+                                <h3 class="text-sm font-medium text-gray-400">Penerbit</h3>
                                 <p class="text-gray-200">{{ $book->publisher }}</p>
                             </div>
                             <div class="bg-gray-700 bg-opacity-40 p-3 rounded-lg">
-                                <h3 class="text-sm font-medium text-gray-400">Publication Date</h3>
-                                <p class="text-gray-200">{{ $book->publication_date->format('M d, Y') }}</p>
+                                <h3 class="text-sm font-medium text-gray-400">Tanggal Terbit</h3>
+                                <p class="text-gray-200">{{ $book->publication_date->format('d M Y') }}</p>
                             </div>
                             <div class="bg-gray-700 bg-opacity-40 p-3 rounded-lg">
-                                <h3 class="text-sm font-medium text-gray-400">Pages</h3>
+                                <h3 class="text-sm font-medium text-gray-400">Halaman</h3>
                                 <p class="text-gray-200">{{ $book->pages }}</p>
                             </div>
                             <div class="bg-gray-700 bg-opacity-40 p-3 rounded-lg">
-                                <h3 class="text-sm font-medium text-gray-400">Language</h3>
+                                <h3 class="text-sm font-medium text-gray-400">Bahasa</h3>
                                 <p class="text-gray-200">{{ $book->language }}</p>
                             </div>
                             <div class="bg-gray-700 bg-opacity-40 p-3 rounded-lg">
-                                <h3 class="text-sm font-medium text-gray-400">Available</h3>
-                                <p class="text-gray-200">{{ $book->stock > 0 ? 'In Stock (' . $book->stock . ')' : 'Out of Stock' }}</p>
+                                <h3 class="text-sm font-medium text-gray-400">Ketersediaan</h3>
+                                <p class="text-gray-200">{{ $book->stock > 0 ? 'Tersedia (' . $book->stock . ')' : 'Habis' }}</p>
                             </div>
                         </div>
 
@@ -100,27 +100,36 @@ use Illuminate\Support\Facades\Storage;
                         <div class="border-t border-gray-700 pt-6">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                 <div>
-                                    <span class="text-3xl font-bold text-amber-500">${{ number_format($book->price, 2) }}</span>
+                                    <span class="text-3xl font-bold text-amber-500">Rp{{ number_format($book->price, 0, ',', '.') }}</span>
                                 </div>
                                 <div class="flex flex-wrap gap-3">
+                                    @auth
                                     <form action="{{ route('cart.add', $book->id) }}" method="POST" class="inline-block">
                                         @csrf
                                         <button type="submit" class="inline-flex items-center px-5 py-3 border border-gray-600 text-sm font-medium rounded-lg text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-amber-500 transition-colors duration-200">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                                 <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
                                             </svg>
-                                            Add to Cart
+                                            Tambah ke Keranjang
                                         </button>
                                     </form>
                                     <form action="{{ route('transactions.buy', $book->id) }}" method="POST" class="inline-block">
                                         @csrf
-                                        <button type="submit" {{ $book->stock <= 0 ? 'disabled' : '' }} class="inline-flex items-center px-5 py-3 border border-transparent text-sm font-medium rounded-lg text-gray-900 bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-amber-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        <button type="submit" class="inline-flex items-center px-5 py-3 border border-transparent text-sm font-medium rounded-lg text-gray-900 bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-amber-500 transition-colors duration-200">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                                             </svg>
-                                            Buy Now
+                                            Beli Sekarang
                                         </button>
                                     </form>
+                                    @else
+                                    <a href="{{ route('login') }}" class="inline-flex items-center px-5 py-3 border border-gray-600 text-sm font-medium rounded-lg text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-amber-500 transition-colors duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                        Masuk untuk Membeli
+                                    </a>
+                                    @endauth
                                 </div>
                             </div>
                         </div>
@@ -132,7 +141,7 @@ use Illuminate\Support\Facades\Storage;
             {{-- 
             @if(isset($book->reviews) && $book->reviews->count() > 0)
             <div class="mt-12">
-                <h2 class="text-2xl font-bold text-gray-200 mb-6">Customer Reviews</h2>
+                <h2 class="text-2xl font-bold text-gray-200 mb-6">Ulasan Pelanggan</h2>
                 <div class="space-y-6">
                     @foreach($book->reviews as $review)
                     <div class="bg-gray-800 rounded-lg p-6">
@@ -143,7 +152,7 @@ use Illuminate\Support\Facades\Storage;
                                 </div>
                                 <div class="ml-4">
                                     <h3 class="text-lg font-medium text-gray-200">{{ $review->user->name }}</h3>
-                                    <p class="text-sm text-gray-400">{{ $review->created_at->format('M d, Y') }}</p>
+                                    <p class="text-sm text-gray-400">{{ $review->created_at->format('d M Y') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center">

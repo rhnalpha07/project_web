@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
-@section('title', 'Shopping Cart')
+@section('title', 'Keranjang Belanja')
 
 @section('content')
 <div class="bg-gray-900 text-gray-100 min-h-screen py-8">
     <div class="container mx-auto px-4">
         <!-- Header -->
         <div class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-amber-500 mb-3">Shopping Cart</h1>
-            <p class="text-xl text-gray-400">Review your items before checkout</p>
+            <h1 class="text-4xl font-bold text-amber-500 mb-3">Keranjang Belanja</h1>
+            <p class="text-xl text-gray-400">Periksa barang Anda sebelum checkout</p>
         </div>
 
         @if($cartItems->isEmpty())
@@ -16,10 +16,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            <h3 class="text-xl font-bold text-gray-300 mb-2">Your Cart is Empty</h3>
-            <p class="text-gray-400 mb-4">Add some books to your cart to get started!</p>
+            <h3 class="text-xl font-bold text-gray-300 mb-2">Keranjang Anda Kosong</h3>
+            <p class="text-gray-400 mb-4">Tambahkan beberapa buku ke keranjang Anda untuk memulai!</p>
             <a href="{{ route('books.index') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-900 bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-                Browse Books
+                Jelajahi Buku
             </a>
         </div>
         @else
@@ -29,11 +29,11 @@
                 <table class="min-w-full divide-y divide-gray-700">
                     <thead class="bg-gray-700">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Book</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Price</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Quantity</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Buku</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Harga</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Jumlah</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Subtotal</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="bg-gray-800 divide-y divide-gray-700">
@@ -51,7 +51,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-amber-500">${{ number_format($item->price, 2) }}</div>
+                                <div class="text-sm text-amber-500">@rupiah($item->price)</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <form action="{{ route('cart.update', $item->id) }}" method="POST" class="flex items-center">
@@ -66,7 +66,7 @@
                                 </form>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-amber-500 font-medium">${{ number_format($item->subtotal, 2) }}</div>
+                                <div class="text-sm text-amber-500 font-medium">@rupiah($item->subtotal)</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <form action="{{ route('cart.remove', $item->id) }}" method="POST" class="inline">
@@ -89,16 +89,16 @@
             <div class="bg-gray-700 px-6 py-4">
                 <div class="flex justify-between items-center">
                     <div class="text-lg font-medium text-gray-200">
-                        Total: <span class="text-amber-500">${{ number_format($total, 2) }}</span>
+                        Total: <span class="text-amber-500">@rupiah($total)</span>
                     </div>
                     <div class="space-x-4">
                         <a href="{{ route('books.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-                            Continue Shopping
+                            Lanjutkan Belanja
                         </a>
                         <form action="{{ route('cart.checkout') }}" method="POST" class="inline">
                             @csrf
                             <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-900 bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-                                Proceed to Checkout
+                                Lanjutkan ke Pembayaran
                             </button>
                         </form>
                     </div>

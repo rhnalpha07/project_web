@@ -51,29 +51,29 @@
                     <div class="flex items-center space-x-4">
                         <a class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('home') ? 'text-amber-500 bg-gray-700' : 'text-gray-300 hover:text-amber-500' }}" 
                            href="{{ route('home') }}">
-                            <i class="fas fa-home mr-1"></i> Home
+                            <i class="fas fa-home mr-1"></i> Beranda
                         </a>
                         <a class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('books*') ? 'text-amber-500 bg-gray-700' : 'text-gray-300 hover:text-amber-500' }}" 
                            href="{{ route('books.index') }}">
-                            <i class="fas fa-book mr-1"></i> Books
+                            <i class="fas fa-book mr-1"></i> Buku
                         </a>
                         <a class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('categories*') ? 'text-amber-500 bg-gray-700' : 'text-gray-300 hover:text-amber-500' }}" 
                            href="{{ route('categories.index') }}">
-                            <i class="fas fa-tags mr-1"></i> Categories
+                            <i class="fas fa-tags mr-1"></i> Kategori
                         </a>
                         <a class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('about') ? 'text-amber-500 bg-gray-700' : 'text-gray-300 hover:text-amber-500' }}" 
                            href="{{ route('about') }}">
-                            <i class="fas fa-info-circle mr-1"></i> About
+                            <i class="fas fa-info-circle mr-1"></i> Tentang
                         </a>
                         <a class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('contact') ? 'text-amber-500 bg-gray-700' : 'text-gray-300 hover:text-amber-500' }}" 
                            href="{{ route('contact') }}">
-                            <i class="fas fa-envelope mr-1"></i> Contact
+                            <i class="fas fa-envelope mr-1"></i> Kontak
                         </a>
                         
                         @auth
                             <!-- Cart Link -->
                             <a href="{{ route('cart.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('cart.index') ? 'text-amber-500 bg-gray-700' : 'text-gray-300 hover:text-amber-500' }} relative">
-                                <i class="fas fa-shopping-cart mr-1"></i> Cart
+                                <i class="fas fa-shopping-cart mr-1"></i> Keranjang
                                 @if(Auth::user()->carts()->count() > 0)
                                     <span class="absolute -top-1 -right-1 bg-amber-500 text-gray-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                                         {{ Auth::user()->carts()->count() }}
@@ -83,7 +83,7 @@
 
                             <!-- Transactions Link -->
                             <a href="{{ route('transactions.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('transactions.*') ? 'text-amber-500 bg-gray-700' : 'text-gray-300 hover:text-amber-500' }}">
-                                <i class="fas fa-receipt mr-1"></i> My Orders
+                                <i class="fas fa-receipt mr-1"></i> Pesanan Saya
                             </a>
 
                             <div class="relative ml-3" x-data="{ open: false }">
@@ -103,23 +103,23 @@
                                      @click.away="open = false" 
                                      class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-gray-700 ring-1 ring-black ring-opacity-5">
                                     <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-amber-500">
-                                        <i class="fas fa-user-edit mr-2"></i> Profile
+                                        <i class="fas fa-user-edit mr-2"></i> Profil
                                     </a>
                                     <div class="border-t border-gray-600"></div>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-amber-500">
-                                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                            <i class="fas fa-sign-out-alt mr-2"></i> Keluar
                                         </button>
                                     </form>
                                 </div>
                             </div>
                         @else
                             <a href="{{ route('login') }}" class="text-gray-300 hover:text-amber-500">
-                                <i class="fas fa-sign-in-alt mr-1"></i> Login
+                                <i class="fas fa-sign-in-alt mr-1"></i> Masuk
                             </a>
                             <a href="{{ route('register') }}" class="bg-amber-500 hover:bg-amber-600 text-gray-900 py-2 px-4 rounded-md ml-2 transition-colors">
-                                <i class="fas fa-user-plus mr-1"></i> Register
+                                <i class="fas fa-user-plus mr-1"></i> Daftar
                             </a>
                         @endauth
                     </div>
@@ -138,25 +138,25 @@
             <!-- Mobile Menu -->
             <div class="hidden md:hidden bg-gray-700 rounded-md mt-2 pb-3 pt-2" id="mobile-menu">
                 <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('home') ? 'text-amber-500 bg-gray-600' : 'text-gray-300 hover:text-amber-500 hover:bg-gray-600' }}">
-                    <i class="fas fa-home mr-1"></i> Home
+                    <i class="fas fa-home mr-1"></i> Beranda
                 </a>
                 <a href="{{ route('books.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('books*') ? 'text-amber-500 bg-gray-600' : 'text-gray-300 hover:text-amber-500 hover:bg-gray-600' }}">
-                    <i class="fas fa-book mr-1"></i> Books
+                    <i class="fas fa-book mr-1"></i> Buku
                 </a>
                 <a href="{{ route('categories.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('categories*') ? 'text-amber-500 bg-gray-600' : 'text-gray-300 hover:text-amber-500 hover:bg-gray-600' }}">
-                    <i class="fas fa-tags mr-1"></i> Categories
+                    <i class="fas fa-tags mr-1"></i> Kategori
                 </a>
                 <a href="{{ route('about') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('about') ? 'text-amber-500 bg-gray-600' : 'text-gray-300 hover:text-amber-500 hover:bg-gray-600' }}">
-                    <i class="fas fa-info-circle mr-1"></i> About
+                    <i class="fas fa-info-circle mr-1"></i> Tentang
                 </a>
                 <a href="{{ route('contact') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('contact') ? 'text-amber-500 bg-gray-600' : 'text-gray-300 hover:text-amber-500 hover:bg-gray-600' }}">
-                    <i class="fas fa-envelope mr-1"></i> Contact
+                    <i class="fas fa-envelope mr-1"></i> Kontak
                 </a>
                 
                 @auth
                     <!-- Mobile Cart Link -->
                     <a href="{{ route('cart.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('cart.index') ? 'text-amber-500 bg-gray-600' : 'text-gray-300 hover:text-amber-500 hover:bg-gray-600' }} relative">
-                        <i class="fas fa-shopping-cart mr-1"></i> Cart
+                        <i class="fas fa-shopping-cart mr-1"></i> Keranjang
                         @if(Auth::user()->carts()->count() > 0)
                             <span class="ml-2 bg-amber-500 text-gray-900 text-xs font-bold rounded-full px-2 py-1">
                                 {{ Auth::user()->carts()->count() }}
@@ -166,24 +166,24 @@
 
                     <!-- Mobile Transactions Link -->
                     <a href="{{ route('transactions.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('transactions.*') ? 'text-amber-500 bg-gray-600' : 'text-gray-300 hover:text-amber-500 hover:bg-gray-600' }}">
-                        <i class="fas fa-receipt mr-1"></i> My Orders
+                        <i class="fas fa-receipt mr-1"></i> Pesanan Saya
                     </a>
 
                     <a href="{{ route('profile.edit') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-amber-500 hover:bg-gray-600">
-                        <i class="fas fa-user-edit mr-1"></i> Profile
+                        <i class="fas fa-user-edit mr-1"></i> Profil
                     </a>
                     <form method="POST" action="{{ route('logout') }}" class="block px-3 py-2">
                         @csrf
                         <button type="submit" class="w-full text-left text-base font-medium text-gray-300 hover:text-amber-500">
-                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                            <i class="fas fa-sign-out-alt mr-1"></i> Keluar
                         </button>
                     </form>
                 @else
                     <a href="{{ route('login') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-amber-500 hover:bg-gray-600">
-                        <i class="fas fa-sign-in-alt mr-1"></i> Login
+                        <i class="fas fa-sign-in-alt mr-1"></i> Masuk
                     </a>
                     <a href="{{ route('register') }}" class="block mx-3 mt-1 py-2 px-3 rounded-md text-base font-medium bg-amber-500 text-gray-900 hover:bg-amber-600 text-center">
-                        <i class="fas fa-user-plus mr-1"></i> Register
+                        <i class="fas fa-user-plus mr-1"></i> Daftar
                     </a>
                 @endauth
             </div>
@@ -224,8 +224,8 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                    <h5 class="text-xl font-semibold mb-4 text-amber-500">About BookStore</h5>
-                    <p class="mb-4">Your one-stop destination for all kinds of books. Discover, learn, and enjoy reading with us.</p>
+                    <h5 class="text-xl font-semibold mb-4 text-amber-500">Tentang BookStore</h5>
+                    <p class="mb-4">Tujuan utama Anda untuk segala jenis buku. Temukan, pelajari, dan nikmati membaca bersama kami.</p>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-400 hover:text-amber-500 transition-colors"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-gray-400 hover:text-amber-500 transition-colors"><i class="fab fa-twitter"></i></a>
@@ -234,33 +234,27 @@
                     </div>
                 </div>
                 <div>
-                    <h5 class="text-xl font-semibold mb-4 text-amber-500">Quick Links</h5>
+                    <h5 class="text-xl font-semibold mb-4 text-amber-500">Link Cepat</h5>
                     <ul class="space-y-2">
-                        <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> Home</a></li>
-                        <li><a href="{{ route('books.index') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> Books</a></li>
-                        <li><a href="{{ route('categories.index') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> Categories</a></li>
-                        <li><a href="{{ route('about') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> About Us</a></li>
-                        <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> Contact Us</a></li>
+                        <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> Beranda</a></li>
+                        <li><a href="{{ route('books.index') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> Buku</a></li>
+                        <li><a href="{{ route('categories.index') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> Kategori</a></li>
+                        <li><a href="{{ route('about') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> Tentang Kami</a></li>
+                        <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-amber-500 transition-colors flex items-center"><i class="fas fa-angle-right mr-2"></i> Hubungi Kami</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="text-xl font-semibold mb-4 text-amber-500">Contact Info</h5>
+                    <h5 class="text-xl font-semibold mb-4 text-amber-500">Informasi Kontak</h5>
                     <ul class="space-y-2">
                         <li class="flex items-start"><i class="fas fa-envelope mt-1 mr-3 text-amber-500"></i> <span>info@bookstore.com</span></li>
-                        <li class="flex items-start"><i class="fas fa-phone mt-1 mr-3 text-amber-500"></i> <span>(123) 456-7890</span></li>
-                        <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3 text-amber-500"></i> <span>123 Book Street, Reading City</span></li>
+                        <li class="flex items-start"><i class="fas fa-phone mt-1 mr-3 text-amber-500"></i> <span>(021) 456-7890</span></li>
+                        <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3 text-amber-500"></i> <span>Jalan Buku 123, Jakarta, Indonesia</span></li>
+                        <li class="flex items-start"><i class="fas fa-clock mt-1 mr-3 text-amber-500"></i> <span>Senin - Jumat: 9:00 - 20:00</span></li>
                     </ul>
-                    <div class="mt-4">
-                        <a href="{{ route('contact') }}" class="inline-flex items-center px-4 py-2 border border-amber-500 text-amber-500 rounded-md hover:bg-amber-500 hover:text-gray-900 transition-colors">
-                            Get In Touch
-                        </a>
-                    </div>
                 </div>
             </div>
-        </div>
-        <div class="border-t border-gray-700 mt-8 pt-4">
-            <div class="container mx-auto px-4">
-                <p class="text-center text-gray-500">&copy; {{ date('Y') }} BookStore. All rights reserved.</p>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-500">
+                <p>&copy; {{ date('Y') }} BookStore. Hak Cipta Dilindungi.</p>
             </div>
         </div>
     </footer>
@@ -269,15 +263,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- Mobile Menu Script -->
+    <!-- Custom JS -->
     <script>
+        // Mobile menu toggle
         document.addEventListener('DOMContentLoaded', function() {
-            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             
-            menuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
         });
     </script>
     @yield('scripts')

@@ -1,19 +1,19 @@
 @extends('layouts.main')
 
-@section('title', 'Book Categories')
+@section('title', 'Kategori Buku')
 
 @section('content')
 <div class="bg-gray-900 text-gray-100 min-h-screen py-8">
     <div class="container mx-auto px-4">
         <!-- Category Header -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-amber-500 mb-3">Book Categories</h1>
-            <p class="text-xl text-gray-400">Discover our extensive collection organized by categories</p>
+            <h1 class="text-4xl font-bold text-amber-500 mb-3">Kategori Buku</h1>
+            <p class="text-xl text-gray-400">Temukan koleksi lengkap kami yang diorganisir berdasarkan kategori</p>
         </div>
 
         <!-- Main Categories Section -->
         <div class="mb-16">
-            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">All Categories</h2>
+            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Semua Kategori</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($categories as $category)
@@ -33,10 +33,10 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                 </svg>
-                                {{ $category->books_count }} books
+                                {{ $category->books_count }} buku
                             </span>
                             <a href="{{ route('categories.show', $category->id) }}" class="inline-flex items-center px-4 py-2 bg-amber-500 hover:bg-amber-600 text-gray-900 font-medium rounded-md transition-colors">
-                                Browse Books
+                                Lihat Buku
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
@@ -50,7 +50,7 @@
 
         <!-- Featured Categories with Images -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Featured Categories</h2>
+            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Kategori Unggulan</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @foreach($featuredCategories as $category)
                 <div class="relative overflow-hidden rounded-lg shadow-lg group">
@@ -68,10 +68,10 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                 </svg>
-                                {{ $category->books_count }} books
+                                {{ $category->books_count }} buku
                             </span>
                             <a href="{{ route('categories.show', $category->id) }}" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-white text-gray-900 font-medium rounded-md transition-colors">
-                                Explore
+                                Jelajahi
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
@@ -85,7 +85,7 @@
 
         <!-- Popular Categories -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Popular Categories</h2>
+            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Kategori Populer</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach($popularCategories as $category)
                 <div class="bg-gray-800 rounded-lg text-center shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
@@ -97,9 +97,9 @@
                         </div>
                     </div>
                     <h4 class="text-lg font-bold text-amber-500 mb-2">{{ $category->name }}</h4>
-                    <p class="text-gray-400 mb-4">{{ $category->books_count }} books available</p>
+                    <p class="text-gray-400 mb-4">{{ $category->books_count }} buku tersedia</p>
                     <a href="{{ route('categories.show', $category->id) }}" class="inline-flex items-center px-4 py-2 border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-gray-900 font-medium rounded-md transition-colors">
-                        View Books
+                        Lihat Buku
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
@@ -111,7 +111,7 @@
 
         <!-- Category Statistics -->
         <section class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Category Statistics</h2>
+            <h2 class="text-2xl font-bold text-gray-100 mb-6 pb-2 border-b border-gray-700">Statistik Kategori</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
                     <div class="flex justify-center mb-4">
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                     <h3 class="text-2xl font-bold text-amber-500 mb-1">{{ $totalCategories }}</h3>
-                    <p class="text-gray-400">Total Categories</p>
+                    <p class="text-gray-400">Total Kategori</p>
                 </div>
                 
                 <div class="bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <h3 class="text-2xl font-bold text-amber-500 mb-1">{{ $totalBooks }}</h3>
-                    <p class="text-gray-400">Total Books</p>
+                    <p class="text-gray-400">Total Buku</p>
                 </div>
                 
                 <div class="bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
@@ -146,7 +146,7 @@
                         </div>
                     </div>
                     <h3 class="text-2xl font-bold text-amber-500 mb-1">{{ $avgBooksPerCategory }}</h3>
-                    <p class="text-gray-400">Avg. Books per Category</p>
+                    <p class="text-gray-400">Rata-rata Buku per Kategori</p>
                 </div>
                 
                 <div class="bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-transform duration-300 hover:-translate-y-2">
@@ -158,7 +158,7 @@
                         </div>
                     </div>
                     <h3 class="text-2xl font-bold text-amber-500 mb-1">{{ $mostPopularCategory }}</h3>
-                    <p class="text-gray-400">Most Popular Category</p>
+                    <p class="text-gray-400">Kategori Terpopuler</p>
                 </div>
             </div>
         </section>

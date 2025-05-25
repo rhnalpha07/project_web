@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>Dashboard Pengguna</title>
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100">
@@ -12,7 +12,7 @@
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
-                        <h1 class="text-xl font-bold text-gray-800">User Dashboard</h1>
+                        <h1 class="text-xl font-bold text-gray-800">Dashboard Pengguna</h1>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -20,7 +20,7 @@
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Logout
+                                Keluar
                             </button>
                         </form>
                     </div>
@@ -45,7 +45,7 @@
                                 <div class="ml-5 w-0 flex-1">
                                     <dl>
                                         <dt class="text-sm font-medium text-gray-500 truncate">
-                                            Welcome
+                                            Selamat Datang
                                         </dt>
                                         <dd class="text-lg font-medium text-gray-900">
                                             {{ auth()->user()->name }}

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Dashboard')
+@section('title', 'Dasbor')
 
 @section('styles')
 <style>
@@ -17,9 +17,9 @@
 <div class="container-fluid">
     <!-- Page Title -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-amber-500">Dashboard</h1>
+        <h1 class="h3 mb-0 text-amber-500">Dasbor</h1>
         <div>
-            <span class="text-gray-300">Welcome back, <span class="text-amber-500">{{ Auth::user()->name }}</span>!</span>
+            <span class="text-gray-300">Selamat datang kembali, <span class="text-amber-500">{{ Auth::user()->name }}</span>!</span>
         </div>
     </div>
 
@@ -31,7 +31,7 @@
                     <i class="fas fa-book"></i>
                 </div>
                 <h3>{{ $totalBooks ?? 0 }}</h3>
-                <p>Total Books</p>
+                <p>Total Buku</p>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
@@ -40,7 +40,7 @@
                     <i class="fas fa-users"></i>
                 </div>
                 <h3>{{ $totalUsers ?? 0 }}</h3>
-                <p>Total Users</p>
+                <p>Total Pengguna</p>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
@@ -49,7 +49,7 @@
                     <i class="fas fa-shopping-cart"></i>
                 </div>
                 <h3>{{ $totalOrders ?? 0 }}</h3>
-                <p>Total Orders</p>
+                <p>Total Pesanan</p>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
@@ -58,7 +58,7 @@
                     <i class="fas fa-dollar-sign"></i>
                 </div>
                 <h3>{{ $totalRevenue ?? 0 }}</h3>
-                <p>Total Revenue</p>
+                <p>Total Pendapatan</p>
             </div>
         </div>
     </div>
@@ -69,16 +69,16 @@
         <div class="col-xl-8 col-lg-7">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="m-0 font-weight-bold">Recent Orders</h6>
+                    <h6 class="m-0 font-weight-bold">Pesanan Terbaru</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Order ID</th>
-                                    <th>Customer</th>
-                                    <th>Books</th>
+                                    <th>ID Pesanan</th>
+                                    <th>Pelanggan</th>
+                                    <th>Buku</th>
                                     <th>Total</th>
                                     <th>Status</th>
                                 </tr>
@@ -89,7 +89,7 @@
                                     <td>#{{ $order->id }}</td>
                                     <td>{{ $order->user->name }}</td>
                                     <td>{{ $order->items_count }}</td>
-                                    <td>${{ $order->total }}</td>
+                                    <td>Rp{{ number_format($order->total, 0, ',', '.') }}</td>
                                     <td>
                                         <span class="badge bg-{{ $order->status_color }}">
                                             {{ $order->status }}
@@ -98,7 +98,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="5" class="text-center">No recent orders</td>
+                                    <td colspan="5" class="text-center">Tidak ada pesanan terbaru</td>
                                 </tr>
                                 @endforelse
                             </tbody>
@@ -112,7 +112,7 @@
         <div class="col-xl-4 col-lg-5">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="m-0 font-weight-bold">Top Selling Books</h6>
+                    <h6 class="m-0 font-weight-bold">Buku Terlaris</h6>
                 </div>
                 <div class="card-body">
                     @forelse($topBooks ?? [] as $book)
@@ -121,11 +121,11 @@
                              class="rounded" style="width: 48px; height: 48px; object-fit: cover;">
                         <div class="ml-3">
                             <h6 class="mb-0 text-gray-200">{{ $book->title }}</h6>
-                            <small class="text-gray-400">{{ $book->sales_count }} sales</small>
+                            <small class="text-gray-400">{{ $book->sales_count }} penjualan</small>
                         </div>
                     </div>
                     @empty
-                    <p class="text-center mb-0 text-gray-400">No data available</p>
+                    <p class="text-center mb-0 text-gray-400">Tidak ada data tersedia</p>
                     @endforelse
                 </div>
             </div>
@@ -139,8 +139,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const months = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
     ];
     
     const salesData = @json($statistics['sales_by_month'] ?? []);
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
             data: {
                 labels: months,
                 datasets: [{
-                    label: 'Sales ($)',
+                    label: 'Penjualan (Rp)',
                     data: chartData,
                     borderColor: '#d4af37', // amber-500
                     backgroundColor: 'rgba(212, 175, 55, 0.1)',
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         beginAtZero: true,
                         ticks: {
                             callback: function(value) {
-                                return '$' + value;
+                                return 'Rp' + value;
                             },
                             color: '#9ca3af' // gray-400
                         },

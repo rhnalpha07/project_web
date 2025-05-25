@@ -81,18 +81,25 @@ class TransactionController extends Controller
     {
         $book = Book::findOrFail($bookId);
         
-        // Create a dummy transaction
+        // Debug information
+        $stockInfo = "Book ID: {$bookId}, Title: {$book->title}, Current Stock: {$book->stock}";
+        
+        // Create a transaction regardless of stock
         $transaction = Transaction::create([
             'user_id' => Auth::id(),
             'book_id' => $bookId,
             'amount' => $book->price,
-            'status' => 'completed', // For dummy transactions, we'll set it as completed
+            'status' => 'completed',
             'payment_method' => 'dummy_payment',
             'transaction_date' => now(),
-            'description' => "Purchase of {$book->title}"
+            'description' => "Purchase of {$book->title} | {$stockInfo}"
         ]);
+        
+        // Always update stock (even if it goes negative, for testing)
+        $book->stock = $book->stock - 1;
+        $book->save();
 
         return redirect()->route('transactions.show', $transaction)
-            ->with('success', 'Purchase completed successfully!');
+            ->with('success', "Purchase completed successfully! {$stockInfo}");
     }
 }

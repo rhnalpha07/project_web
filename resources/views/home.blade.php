@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Home')
+@section('title', 'Beranda')
 
 @section('styles')
 <style>
@@ -119,17 +119,17 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="w-full md:w-1/2">
-                    <h1 class="text-4xl md:text-5xl font-bold text-amber-500 mb-4">Welcome to BookStore</h1>
-                    <p class="text-xl text-gray-300 mb-6">Discover thousands of books across various genres. From bestsellers to rare finds, we have something for every reader.</p>
+                    <h1 class="text-4xl md:text-5xl font-bold text-amber-500 mb-4">Selamat Datang di BookStore</h1>
+                    <p class="text-xl text-gray-300 mb-6">Temukan ribuan buku dari berbagai genre. Dari buku terlaris hingga buku langka, kami memiliki sesuatu untuk setiap pembaca.</p>
                     <a href="{{ route('books.index') }}" class="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold rounded-md transition-colors">
-                        Browse Books
+                        Jelajahi Buku
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </a>
                 </div>
                 <div class="w-full md:w-1/2">
-                    <img src="{{ asset('images/hero-books.jpg') }}" alt="Books Collection" class="rounded-lg shadow-xl">
+                    <img src="{{ asset('images/hero-books.jpg') }}" alt="Koleksi Buku" class="rounded-lg shadow-xl">
                 </div>
             </div>
         </div>
@@ -139,9 +139,9 @@
     <section class="py-12 bg-gray-900">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-bold text-gray-100">Featured Books</h2>
+                <h2 class="text-2xl font-bold text-gray-100">Buku Unggulan</h2>
                 <a href="{{ route('books.index') }}" class="flex items-center text-amber-500 hover:text-amber-400 font-medium">
-                    View All
+                    Lihat Semua
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
@@ -160,7 +160,7 @@
                                 <div class="h-full flex items-center justify-center p-4">
                                     <div class="text-center">
                                         <h3 class="text-xl font-bold text-gray-300">{{ $book->title }}</h3>
-                                        <p class="text-gray-400 mt-2">By {{ $book->author }}</p>
+                                        <p class="text-gray-400 mt-2">Oleh {{ $book->author }}</p>
                                     </div>
                                 </div>
                             @endif
@@ -178,24 +178,24 @@
                             
                             <!-- Category Badge -->
                             <div class="absolute bottom-2 right-2 bg-amber-500 text-gray-900 text-xs font-medium px-2 py-1 rounded-full">
-                                {{ $book->categories->first()->name ?? 'Fiction' }}
+                                {{ $book->categories->first()->name ?? 'Fiksi' }}
                             </div>
                         </div>
                         
                         <div class="p-4">
                             <h3 class="text-lg font-bold text-gray-200 group-hover:text-amber-500 transition-colors">{{ $book->title }}</h3>
-                            <p class="text-gray-400 text-sm mb-2">By {{ $book->author }}</p>
+                            <p class="text-gray-400 text-sm mb-2">Oleh {{ $book->author }}</p>
                             <p class="text-gray-500 text-sm mb-3 line-clamp-2">{{ Str::limit($book->description, 80) }}</p>
                             
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center">
-                                    <span class="text-amber-500 font-bold">${{ number_format($book->price, 2) }}</span>
+                                    <span class="text-amber-500 font-bold">Rp{{ number_format($book->price, 0, ',', '.') }}</span>
                                     @if($loop->index % 2 == 0)
-                                        <span class="text-gray-500 text-sm line-through ml-2">${{ number_format($book->price * 1.2, 2) }}</span>
+                                        <span class="text-gray-500 text-sm line-through ml-2">Rp{{ number_format($book->price * 1.2, 0, ',', '.') }}</span>
                                     @endif
                                 </div>
                                 <button onclick="showPurchaseModal({{ $book->id }})" class="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-gray-900 font-medium text-sm px-3 py-1 rounded-full transition-colors">
-                                    Buy Now
+                                    Beli Sekarang
                                 </button>
                             </div>
                         </div>
@@ -209,7 +209,7 @@
     <!-- Categories Section -->
     <section class="py-12 bg-gray-800">
         <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold text-gray-100 mb-8">Browse by Category</h2>
+            <h2 class="text-2xl font-bold text-gray-100 mb-8">Jelajahi berdasarkan Kategori</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach($categories as $category)
                 <a href="{{ route('categories.show', $category->id) }}" class="block group">
@@ -224,7 +224,7 @@
                         </div>
                         <p class="text-gray-300 mb-4">{{ $category->description }}</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-amber-400 group-hover:text-amber-300">Browse {{ $category->name }}</span>
+                            <span class="text-amber-400 group-hover:text-amber-300">Jelajahi {{ $category->name }}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400 group-hover:text-amber-300 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
@@ -247,46 +247,18 @@
                                 <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                             </svg>
-                            <h2 class="text-3xl font-bold text-amber-500">Subscribe to Our Newsletter</h2>
+                            <h2 class="text-3xl font-bold text-amber-500">Berlangganan Newsletter Kami</h2>
                         </div>
-                        <p class="text-xl text-gray-300 mb-6">Stay updated with our latest books and exclusive offers!</p>
-                        <ul class="space-y-3 mb-6">
-                            <li class="flex items-center text-gray-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                </svg>
-                                Get personalized book recommendations
-                            </li>
-                            <li class="flex items-center text-gray-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                </svg>
-                                Exclusive discounts for subscribers
-                            </li>
-                            <li class="flex items-center text-gray-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                </svg>
-                                Early access to new releases
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="w-full md:w-1/2 p-8 bg-gray-800">
-                        <form action="{{ route('newsletter.subscribe') }}" method="POST" class="bg-gray-700 rounded-lg p-6 shadow-inner">
-                            @csrf
-                            <h3 class="text-xl font-bold text-amber-500 mb-4">Join Our Community of Readers</h3>
-                            <div class="mb-4">
-                                <input type="email" class="w-full bg-gray-600 border border-gray-500 rounded-md py-3 px-4 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" 
-                                      placeholder="Enter your email" required>
-                            </div>
-                            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                                </svg>
-                                Subscribe Now
+                        <p class="text-gray-300 mb-6">Dapatkan informasi terbaru tentang buku baru, diskon, dan acara khusus langsung ke kotak masuk Anda.</p>
+                        <form action="#" method="POST" class="flex flex-col sm:flex-row gap-4">
+                            <input type="email" placeholder="Alamat Email Anda" class="flex-grow px-4 py-3 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 text-gray-300">
+                            <button type="submit" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold rounded-md transition-colors">
+                                Berlangganan
                             </button>
-                            <p class="text-gray-400 text-sm mt-3">We respect your privacy. Unsubscribe at any time.</p>
                         </form>
+                    </div>
+                    <div class="w-full md:w-1/2 bg-cover bg-center" style="background-image: url('{{ asset('images/newsletter-bg.jpg') }}')">
+                        <div class="h-64 md:h-full"></div>
                     </div>
                 </div>
             </div>

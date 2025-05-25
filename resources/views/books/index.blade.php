@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Books')
+@section('title', 'Buku')
 
 @php
 use Illuminate\Support\Facades\Storage;
@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Storage;
     <div class="container mx-auto px-4">
         <!-- Header -->
         <div class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-amber-500 mb-3">Explore Our Books</h1>
-            <p class="text-xl text-gray-400">Discover the perfect read from our vast collection</p>
+            <h1 class="text-4xl font-bold text-amber-500 mb-3">Jelajahi Koleksi Buku Kami</h1>
+            <p class="text-xl text-gray-400">Temukan bacaan sempurna dari koleksi kami yang luas</p>
         </div>
 
         <div class="flex flex-col md:flex-row gap-8">
@@ -25,13 +25,13 @@ use Illuminate\Support\Facades\Storage;
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
                             </svg>
-                            Categories
+                            Kategori
                         </h3>
                     </div>
                     <div class="divide-y divide-gray-700">
                         <a href="{{ route('books.index') }}" 
                             class="block px-4 py-3 hover:bg-gray-700 transition-colors flex justify-between items-center {{ !request('category') ? 'bg-gray-700 text-amber-500 font-medium' : 'text-gray-300' }}">
-                            All Books
+                            Semua Buku
                             <span class="bg-gray-600 text-gray-300 text-xs font-medium px-2 py-1 rounded-full">{{ $books->total() }}</span>
                         </a>
                         
@@ -52,7 +52,7 @@ use Illuminate\Support\Facades\Storage;
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
                             </svg>
-                            Price Range
+                            Rentang Harga
                         </h3>
                     </div>
                     <div class="p-4">
@@ -65,17 +65,17 @@ use Illuminate\Support\Facades\Storage;
                             @endif
                             
                             <div class="mb-4">
-                                <label for="min_price" class="block text-sm font-medium text-gray-400 mb-1">Min Price</label>
+                                <label for="min_price" class="block text-sm font-medium text-gray-400 mb-1">Harga Minimum</label>
                                 <input type="number" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" 
                                     id="min_price" name="min_price" value="{{ request('min_price') }}" min="0" step="0.01">
                             </div>
                             <div class="mb-4">
-                                <label for="max_price" class="block text-sm font-medium text-gray-400 mb-1">Max Price</label>
+                                <label for="max_price" class="block text-sm font-medium text-gray-400 mb-1">Harga Maksimum</label>
                                 <input type="number" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" 
                                     id="max_price" name="max_price" value="{{ request('max_price') }}" min="0" step="0.01">
                             </div>
                             <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-2 px-4 rounded-md transition-colors">
-                                Apply Filter
+                                Terapkan Filter
                             </button>
                         </form>
                     </div>
@@ -88,7 +88,7 @@ use Illuminate\Support\Facades\Storage;
                 <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg mb-6">
                     <div class="p-4">
                         <form action="{{ route('books.index') }}" method="GET" class="flex">
-                            <input type="text" name="search" placeholder="Search for title, author, or description..." 
+                            <input type="text" name="search" placeholder="Cari judul, penulis, atau deskripsi..." 
                                 class="flex-grow bg-gray-700 border border-gray-600 rounded-l-md py-2 px-4 text-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                                 value="{{ request('search') }}">
                             
@@ -110,7 +110,7 @@ use Illuminate\Support\Facades\Storage;
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    No books found matching your criteria. Try different search terms or browse all books.
+                    Tidak ada buku yang ditemukan sesuai kriteria Anda. Coba kata kunci pencarian lain atau jelajahi semua buku.
                 </div>
                 @else
                 
@@ -129,34 +129,44 @@ use Illuminate\Support\Facades\Storage;
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                         </svg>
                                         <h3 class="text-xl font-bold text-gray-300">{{ $book->title }}</h3>
-                                        <p class="text-gray-400">By {{ $book->author }}</p>
+                                        <p class="text-gray-400">Oleh {{ $book->author }}</p>
                                     </div>
                                 </div>
                             @endif
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <a href="{{ route('books.show', $book->id) }}" class="px-3 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">Details</a>
+                                <a href="{{ route('books.show', $book->id) }}" class="px-3 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">Detail</a>
+                                @auth
                                 <form action="{{ route('cart.add', $book->id) }}" method="POST" class="inline">
                                     @csrf
                                     <button type="submit" class="px-3 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
                                             <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
                                         </svg>
-                                        Add to Cart
+                                        Tambah ke Keranjang
                                     </button>
                                 </form>
+                                @else
+                                <a href="{{ route('login') }}" class="px-3 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                    Masuk
+                                </a>
+                                @endauth
                             </div>
                         </div>
                         <!-- Card Content -->
                         <div class="p-4">
                             <h3 class="text-lg font-bold text-gray-200">{{ $book->title }}</h3>
-                            <p class="text-gray-400 text-sm mb-2">By {{ $book->author }}</p>
+                            <p class="text-gray-400 text-sm mb-2">Oleh {{ $book->author }}</p>
                             <p class="text-gray-500 text-sm line-clamp-3 mb-4">{{ Str::limit($book->description, 100) }}</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-amber-500 font-bold">${{ number_format($book->price, 2) }}</span>
+                                <span class="text-amber-500 font-bold">@rupiah($book->price)</span>
                                 <div class="space-x-2">
                                     <a href="{{ route('books.show', $book->id) }}" class="px-3 py-2 bg-amber-500 text-gray-900 rounded-md hover:bg-amber-600 inline-block">
-                                        Details
+                                        Detail
                                     </a>
+                                    @auth
                                     <form action="{{ route('cart.add', $book->id) }}" method="POST" class="inline">
                                         @csrf
                                         <button type="submit" class="px-3 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">
@@ -165,6 +175,13 @@ use Illuminate\Support\Facades\Storage;
                                             </svg>
                                         </button>
                                     </form>
+                                    @else
+                                    <a href="{{ route('login') }}" class="px-3 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600 inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                    @endauth
                                 </div>
                             </div>
                         </div>

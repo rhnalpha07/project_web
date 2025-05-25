@@ -11,10 +11,10 @@
                 <p class="lead">{{ $category->description }}</p>
                 <div class="d-flex align-items-center">
                     <span class="badge bg-primary rounded-pill fs-6 me-3">
-                        <i class="fas fa-book me-1"></i> {{ $books->total() }} Books
+                        <i class="fas fa-book me-1"></i> {{ $books->total() }} Buku
                     </span>
                     <a href="{{ route('categories.index') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-1"></i> All Categories
+                        <i class="fas fa-arrow-left me-1"></i> Semua Kategori
                     </a>
                 </div>
             </div>
@@ -31,11 +31,11 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2>Books in {{ $category->name }}</h2>
+                <h2>Buku dalam {{ $category->name }}</h2>
                 <div class="d-flex">
                     <form action="{{ route('categories.show', $category) }}" method="GET" class="d-flex">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Search in this category..." 
+                            <input type="text" name="search" class="form-control" placeholder="Cari di kategori ini..." 
                                    value="{{ request('search') }}">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fas fa-search"></i>
@@ -64,7 +64,7 @@
                             @if($book->is_featured)
                                 <div class="position-absolute top-0 end-0 m-2">
                                     <span class="badge bg-warning text-dark">
-                                        <i class="fas fa-star me-1"></i> Featured
+                                        <i class="fas fa-star me-1"></i> Unggulan
                                     </span>
                                 </div>
                             @endif
@@ -72,7 +72,7 @@
                             @if($book->created_at->diffInDays(now()) < 30)
                                 <div class="position-absolute top-0 start-0 m-2">
                                     <span class="badge bg-success">
-                                        <i class="fas fa-bookmark me-1"></i> New
+                                        <i class="fas fa-bookmark me-1"></i> Baru
                                     </span>
                                 </div>
                             @endif
@@ -91,9 +91,9 @@
                             <p class="card-text description-truncate mb-3">{{ Str::limit($book->description, 100) }}</p>
                             
                             <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="fw-bold text-primary">${{ number_format($book->price, 2) }}</span>
+                                <span class="fw-bold text-primary">Rp{{ number_format($book->price, 0, ',', '.') }}</span>
                                 <a href="{{ route('books.show', $book) }}" class="btn btn-sm btn-outline-primary">
-                                    View Details
+                                    Lihat Detail
                                 </a>
                             </div>
                         </div>
@@ -110,10 +110,10 @@
         <div class="alert alert-info">
             <i class="fas fa-info-circle me-2"></i>
             @if(request('search'))
-                No books found matching "{{ request('search') }}" in this category. 
-                <a href="{{ route('categories.show', $category) }}" class="alert-link">Clear search</a>
+                Tidak ada buku yang cocok dengan "{{ request('search') }}" di kategori ini. 
+                <a href="{{ route('categories.show', $category) }}" class="alert-link">Hapus pencarian</a>
             @else
-                No books available in this category yet.
+                Belum ada buku yang tersedia dalam kategori ini.
             @endif
         </div>
     @endif
@@ -129,7 +129,7 @@
 
     @if($relatedCategories->count() > 0)
         <section class="mt-5 pt-4 border-top">
-            <h3 class="mb-4">Other Categories You Might Like</h3>
+            <h3 class="mb-4">Kategori Lain yang Mungkin Anda Suka</h3>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                 @foreach($relatedCategories as $relatedCategory)
                     <div class="col">
@@ -139,9 +139,9 @@
                                     <i class="fas fa-tags fa-2x text-primary"></i>
                                 </div>
                                 <h5 class="card-title">{{ $relatedCategory->name }}</h5>
-                                <p class="text-muted">{{ $relatedCategory->books_count }} books</p>
+                                <p class="text-muted">{{ $relatedCategory->books_count }} buku</p>
                                 <a href="{{ route('categories.show', $relatedCategory) }}" class="btn btn-sm btn-outline-primary">
-                                    Explore <i class="fas fa-arrow-right ms-1"></i>
+                                    Jelajahi <i class="fas fa-arrow-right ms-1"></i>
                                 </a>
                             </div>
                         </div>

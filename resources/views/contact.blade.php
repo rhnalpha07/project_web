@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
-@section('title', 'Contact Us')
+@section('title', 'Hubungi Kami')
 
 @section('content')
 <div class="bg-gray-900 text-gray-100 py-12">
     <div class="container mx-auto px-4">
         <div class="flex flex-col md:flex-row mb-12">
             <div class="w-full md:w-1/2">
-                <h1 class="text-4xl md:text-5xl font-bold text-amber-500 mb-4">Contact Us</h1>
-                <p class="text-xl text-gray-300">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-amber-500 mb-4">Hubungi Kami</h1>
+                <p class="text-xl text-gray-300">Punya pertanyaan? Kami senang mendengar dari Anda. Kirimkan pesan dan kami akan merespons secepat mungkin.</p>
             </div>
         </div>
 
@@ -16,7 +16,7 @@
             <!-- Contact Form -->
             <div class="w-full lg:w-2/3">
                 <div class="bg-gray-800 rounded-lg shadow-xl p-8">
-                    <h3 class="text-2xl font-bold text-amber-500 mb-6">Send us a Message</h3>
+                    <h3 class="text-2xl font-bold text-amber-500 mb-6">Kirim Pesan</h3>
                     
                     @if(session('success'))
                         <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded">
@@ -28,7 +28,7 @@
                         @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
-                                <label for="name" class="block text-gray-300 text-sm font-medium mb-2">Your Name</label>
+                                <label for="name" class="block text-gray-300 text-sm font-medium mb-2">Nama Anda</label>
                                 <input type="text" class="w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 text-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent @error('name') border-red-500 @enderror" 
                                     id="name" name="name" value="{{ old('name') }}" required>
                                 @error('name')
@@ -37,7 +37,7 @@
                             </div>
 
                             <div>
-                                <label for="email" class="block text-gray-300 text-sm font-medium mb-2">Email Address</label>
+                                <label for="email" class="block text-gray-300 text-sm font-medium mb-2">Alamat Email</label>
                                 <input type="email" class="w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 text-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent @error('email') border-red-500 @enderror" 
                                     id="email" name="email" value="{{ old('email') }}" required>
                                 @error('email')
@@ -47,7 +47,7 @@
                         </div>
 
                         <div class="mb-6">
-                            <label for="subject" class="block text-gray-300 text-sm font-medium mb-2">Subject</label>
+                            <label for="subject" class="block text-gray-300 text-sm font-medium mb-2">Subjek</label>
                             <input type="text" class="w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 text-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent @error('subject') border-red-500 @enderror" 
                                 id="subject" name="subject" value="{{ old('subject') }}" required>
                             @error('subject')
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="mb-6">
-                            <label for="message" class="block text-gray-300 text-sm font-medium mb-2">Message</label>
+                            <label for="message" class="block text-gray-300 text-sm font-medium mb-2">Pesan</label>
                             <textarea class="w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 text-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent @error('message') border-red-500 @enderror" 
                                 id="message" name="message" rows="6" required>{{ old('message') }}</textarea>
                             @error('message')
@@ -65,7 +65,7 @@
                         </div>
 
                         <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 px-6 rounded-md transition-colors">
-                            Send Message
+                            Kirim Pesan
                         </button>
                     </form>
                 </div>
@@ -74,7 +74,7 @@
             <!-- Contact Information -->
             <div class="w-full lg:w-1/3 space-y-6">
                 <div class="bg-gray-800 rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold text-amber-500 mb-6">Contact Information</h3>
+                    <h3 class="text-2xl font-bold text-amber-500 mb-6">Informasi Kontak</h3>
                     <div class="space-y-6">
                         <div class="flex items-start">
                             <div class="bg-amber-500 rounded-full p-3 mr-4">
@@ -84,9 +84,9 @@
                                 </svg>
                             </div>
                             <div>
-                                <h5 class="text-lg font-medium text-gray-200">Address</h5>
-                                <p class="text-gray-400">123 Book Street</p>
-                                <p class="text-gray-400">New York, NY 10001</p>
+                                <h5 class="text-lg font-medium text-gray-200">Alamat</h5>
+                                <p class="text-gray-400">Jalan Buku 123</p>
+                                <p class="text-gray-400">Jakarta, 10001</p>
                             </div>
                         </div>
                         <div class="flex items-start">
@@ -96,9 +96,9 @@
                                 </svg>
                             </div>
                             <div>
-                                <h5 class="text-lg font-medium text-gray-200">Phone</h5>
-                                <p class="text-gray-400">Toll-free: (800) 123-4567</p>
-                                <p class="text-gray-400">Local: (212) 555-0123</p>
+                                <h5 class="text-lg font-medium text-gray-200">Telepon</h5>
+                                <p class="text-gray-400">Bebas Pulsa: (800) 123-4567</p>
+                                <p class="text-gray-400">Lokal: (021) 555-0123</p>
                             </div>
                         </div>
                         <div class="flex items-start">
@@ -120,10 +120,10 @@
                                 </svg>
                             </div>
                             <div>
-                                <h5 class="text-lg font-medium text-gray-200">Business Hours</h5>
-                                <p class="text-gray-400">Monday - Friday: 9:00 AM - 8:00 PM</p>
-                                <p class="text-gray-400">Saturday: 10:00 AM - 6:00 PM</p>
-                                <p class="text-gray-400">Sunday: Closed</p>
+                                <h5 class="text-lg font-medium text-gray-200">Jam Kerja</h5>
+                                <p class="text-gray-400">Senin - Jumat: 9:00 - 20:00</p>
+                                <p class="text-gray-400">Sabtu: 10:00 - 18:00</p>
+                                <p class="text-gray-400">Minggu: Tutup</p>
                             </div>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
 
                 <!-- Social Media -->
                 <div class="bg-gray-800 rounded-lg shadow-xl p-6">
-                    <h3 class="text-2xl font-bold text-amber-500 mb-6">Follow Us</h3>
+                    <h3 class="text-2xl font-bold text-amber-500 mb-6">Ikuti Kami</h3>
                     <div class="flex justify-around">
                         <a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">
                             <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
