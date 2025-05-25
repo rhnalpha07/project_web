@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -25,10 +27,11 @@ class BookController extends Controller
             });
         }
 
-        // Category filter
+        // Category filter - Fix ambiguous id column by specifying the table name
         if ($request->has('category')) {
-            $query->whereHas('categories', function($q) use ($request) {
-                $q->where('id', $request->category);
+            $categoryId = $request->category;
+            $query->whereHas('categories', function($q) use ($categoryId) {
+                $q->where('categories.id', $categoryId);
             });
         }
 
@@ -45,6 +48,17 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        // Check if we need to load relationships
+        if (Schema::hasTable('categories')) {
+            $book->load('categories');
+        }
+        
+        if (Schema::hasTable('genres')) {
+            $book->load('genres');
+        }
+        
+        // We don't load reviews since we've commented out that section in the view
+        
         return view('books.show', compact('book'));
     }
 } 

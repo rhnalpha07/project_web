@@ -6,9 +6,9 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0 text-gray-800">Categories Management</h1>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">
             <i class="fas fa-plus"></i> Add New Category
-        </button>
+        </a>
     </div>
 
     @if(session('success'))
@@ -32,10 +32,11 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Name</th>
-                            <th>Slug</th>
                             <th>Description</th>
                             <th>Books Count</th>
+                            <th>Featured</th>
                             <th>Created At</th>
                             <th>Actions</th>
                         </tr>
@@ -43,17 +44,30 @@
                     <tbody>
                         @forelse($categories as $category)
                         <tr>
+                            <td>
+                                @if($category->image)
+                                    <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" 
+                                        class="img-thumbnail" style="height: 50px; width: 50px; object-fit: cover;">
+                                @else
+                                    <span class="text-muted">No image</span>
+                                @endif
+                            </td>
                             <td>{{ $category->name }}</td>
-                            <td>{{ $category->slug }}</td>
-                            <td>{{ $category->description }}</td>
+                            <td>{{ \Illuminate\Support\Str::limit($category->description, 50) }}</td>
                             <td>{{ $category->books_count }}</td>
+                            <td>
+                                @if($category->is_featured)
+                                    <span class="badge bg-success">Yes</span>
+                                @else
+                                    <span class="badge bg-secondary">No</span>
+                                @endif
+                            </td>
                             <td>{{ $category->created_at->format('M d, Y') }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-info" 
-                                            onclick="editCategory('{{ $category->id }}', '{{ $category->name }}', '{{ $category->description }}')">
+                                    <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-sm btn-info">
                                         <i class="fas fa-edit"></i>
-                                    </button>
+                                    </a>
                                     <button type="button" class="btn btn-sm btn-danger" 
                                             onclick="confirmDelete('{{ $category->id }}')">
                                         <i class="fas fa-trash"></i>
@@ -69,7 +83,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center">No categories found</td>
+                            <td colspan="7" class="text-center">No categories found</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -83,91 +97,8 @@
     </div>
 </div>
 
-<!-- Add Category Modal -->
-<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="{{ route('admin.categories.store') }}" method="POST">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                               id="name" name="name" required>
-                        @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control @error('description') is-invalid @enderror" 
-                                  id="description" name="description" rows="3"></textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create Category</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Edit Category Modal -->
-<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="editCategoryForm" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit_name" class="form-label">Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                               id="edit_name" name="name" required>
-                        @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_description" class="form-label">Description</label>
-                        <textarea class="form-control @error('description') is-invalid @enderror" 
-                                  id="edit_description" name="description" rows="3"></textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Update Category</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 @push('scripts')
 <script>
-function editCategory(id, name, description) {
-    const form = document.getElementById('editCategoryForm');
-    form.action = `/admin/categories/${id}`;
-    document.getElementById('edit_name').value = name;
-    document.getElementById('edit_description').value = description;
-    new bootstrap.Modal(document.getElementById('editCategoryModal')).show();
-}
-
 function confirmDelete(categoryId) {
     if (confirm('Are you sure you want to delete this category?')) {
         document.getElementById('delete-form-' + categoryId).submit();

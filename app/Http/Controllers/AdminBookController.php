@@ -8,6 +8,7 @@ use App\Models\Genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class AdminBookController extends Controller
 {
@@ -18,6 +19,9 @@ class AdminBookController extends Controller
     {
         // Meningkatkan batas waktu eksekusi
         set_time_limit(120);
+        
+        // Nonaktifkan sementara waktu query log untuk menghemat memori
+        DB::disableQueryLog();
         
         // Memulai query builder
         $query = Book::with(['categories', 'genres']);
@@ -48,11 +52,14 @@ class AdminBookController extends Controller
             }
         }
         
-        // Paginate hasil
-        $books = $query->latest()->paginate(10)->withQueryString();
+        // Paginate hasil dengan efisien - hanya mengambil kolom yang diperlukan
+        $books = $query->select(['id', 'title', 'author', 'price', 'stock', 'cover_image', 'updated_at', 'created_at'])
+                        ->latest()
+                        ->paginate(10)
+                        ->withQueryString();
         
-        // Load kategori untuk filter
-        $categories = Category::all();
+        // Load kategori untuk filter - hanya mengambil kolom yang diperlukan
+        $categories = Category::select(['id', 'name'])->get();
         
         return view('admin.books.index', compact('books', 'categories'));
     }

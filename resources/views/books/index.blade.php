@@ -2,6 +2,10 @@
 
 @section('title', 'Books')
 
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
+
 @section('content')
 <div class="bg-gray-900 text-gray-100 min-h-screen py-8">
     <div class="container mx-auto px-4">
@@ -116,11 +120,14 @@
                     <div class="relative group bg-gray-800 rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
                         <!-- Image & Hover Buttons -->
                         <div class="relative h-64 overflow-hidden">
-                            @if($book->cover_image)
+                            @if($book->cover_image && Storage::disk('public')->exists($book->cover_image))
                                 <img src="{{ asset('storage/' . $book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
                             @else
                                 <div class="h-full flex items-center justify-center bg-gray-700 p-4">
                                     <div class="text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                        </svg>
                                         <h3 class="text-xl font-bold text-gray-300">{{ $book->title }}</h3>
                                         <p class="text-gray-400">By {{ $book->author }}</p>
                                     </div>
@@ -137,12 +144,6 @@
                                         Add to Cart
                                     </button>
                                 </form>
-                                <form action="{{ route('transactions.buy', $book->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    <button type="submit" class="px-3 py-2 bg-amber-500 text-gray-900 rounded-md hover:bg-amber-600">
-                                        Buy Now
-                                    </button>
-                                </form>
                             </div>
                         </div>
                         <!-- Card Content -->
@@ -153,9 +154,9 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-amber-500 font-bold">${{ number_format($book->price, 2) }}</span>
                                 <div class="space-x-2">
-                                    <button onclick="showPurchaseModal({{ $book->id }})" class="px-3 py-2 bg-amber-500 text-gray-900 rounded-md hover:bg-amber-600">
-                                        Buy Now
-                                    </button>
+                                    <a href="{{ route('books.show', $book->id) }}" class="px-3 py-2 bg-amber-500 text-gray-900 rounded-md hover:bg-amber-600 inline-block">
+                                        Details
+                                    </a>
                                     <form action="{{ route('cart.add', $book->id) }}" method="POST" class="inline">
                                         @csrf
                                         <button type="submit" class="px-3 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">
