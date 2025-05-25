@@ -14,10 +14,47 @@ class AdminBookController extends Controller
     /**
      * Display a listing of the books.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::latest()->paginate(10);
-        return view('admin.books.index', compact('books'));
+        // Meningkatkan batas waktu eksekusi
+        set_time_limit(120);
+        
+        // Memulai query builder
+        $query = Book::with(['categories', 'genres']);
+        
+        // Filter berdasarkan pencarian
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('author', 'like', "%{$search}%")
+                  ->orWhere('isbn', 'like', "%{$search}%");
+            });
+        }
+        
+        // Filter berdasarkan kategori
+        if ($request->has('category') && !empty($request->category)) {
+            $query->whereHas('categories', function($q) use ($request) {
+                $q->where('categories.id', $request->category);
+            });
+        }
+        
+        // Filter berdasarkan status stok
+        if ($request->has('status') && !empty($request->status)) {
+            if ($request->status === 'in_stock') {
+                $query->where('stock', '>', 0);
+            } elseif ($request->status === 'out_of_stock') {
+                $query->where('stock', '<=', 0);
+            }
+        }
+        
+        // Paginate hasil
+        $books = $query->latest()->paginate(10)->withQueryString();
+        
+        // Load kategori untuk filter
+        $categories = Category::all();
+        
+        return view('admin.books.index', compact('books', 'categories'));
     }
 
     /**

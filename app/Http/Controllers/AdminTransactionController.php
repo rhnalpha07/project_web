@@ -27,7 +27,7 @@ class AdminTransactionController extends Controller
         return view('admin.transactions.show', compact('transaction'));
     }
 
-    public function report(Request $request)
+    public function reports(Request $request)
     {
         $startDate = $request->start_date ?? now()->startOfMonth();
         $endDate = $request->end_date ?? now();
@@ -51,6 +51,11 @@ class AdminTransactionController extends Controller
         ];
 
         return view('admin.reports.transactions', compact('transactions', 'statistics', 'startDate', 'endDate'));
+    }
+
+    public function report(Request $request)
+    {
+        return $this->reports($request);
     }
 
     public function users()

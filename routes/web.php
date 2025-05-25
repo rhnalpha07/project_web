@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/transactions/{transaction}', [AdminTransactionController::class, 'show'])->name('transactions.show');
         
         // Reports
+        Route::get('/reports', [AdminTransactionController::class, 'reports'])->name('reports.index');
         Route::get('/reports/transactions', [AdminTransactionController::class, 'reports'])->name('reports.transactions');
         
         // Users Management

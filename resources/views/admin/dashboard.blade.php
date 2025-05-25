@@ -15,81 +15,92 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Stats Cards Row -->
-    <div class="row g-4 mb-4">
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="stats-card">
-                <div class="icon" style="background-color: var(--primary-color);">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>{{ number_format($statistics['total_users']) }}</h3>
-                <p>Total Users</p>
-            </div>
+    <!-- Page Title -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-amber-500">Dashboard</h1>
+        <div>
+            <span class="text-gray-300">Welcome back, <span class="text-amber-500">{{ Auth::user()->name }}</span>!</span>
         </div>
-        
-        <div class="col-12 col-sm-6 col-xl-3">
+    </div>
+
+    <!-- Stats Cards Row -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6">
             <div class="stats-card">
-                <div class="icon" style="background-color: var(--success-color);">
+                <div class="icon" style="background-color: var(--primary-color)">
                     <i class="fas fa-book"></i>
                 </div>
-                <h3>{{ number_format($statistics['total_books']) }}</h3>
+                <h3>{{ $totalBooks ?? 0 }}</h3>
                 <p>Total Books</p>
             </div>
         </div>
-        
-        <div class="col-12 col-sm-6 col-xl-3">
+        <div class="col-xl-3 col-md-6">
             <div class="stats-card">
-                <div class="icon" style="background-color: var(--info-color);">
-                    <i class="fas fa-shopping-cart"></i>
+                <div class="icon" style="background-color: var(--success-color)">
+                    <i class="fas fa-users"></i>
                 </div>
-                <h3>{{ number_format($statistics['total_transactions']) }}</h3>
-                <p>Total Transactions</p>
+                <h3>{{ $totalUsers ?? 0 }}</h3>
+                <p>Total Users</p>
             </div>
         </div>
-        
-        <div class="col-12 col-sm-6 col-xl-3">
+        <div class="col-xl-3 col-md-6">
             <div class="stats-card">
-                <div class="icon" style="background-color: var(--warning-color);">
+                <div class="icon" style="background-color: var(--info-color)">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3>{{ $totalOrders ?? 0 }}</h3>
+                <p>Total Orders</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stats-card">
+                <div class="icon" style="background-color: var(--warning-color)">
                     <i class="fas fa-dollar-sign"></i>
                 </div>
-                <h3>${{ number_format($statistics['total_sales'], 2) }}</h3>
-                <p>Total Sales</p>
+                <h3>{{ $totalRevenue ?? 0 }}</h3>
+                <p>Total Revenue</p>
             </div>
         </div>
     </div>
 
+    <!-- Recent Orders & Top Books -->
     <div class="row">
-        <!-- Recent Transactions -->
-        <div class="col-12 col-xl-8 mb-4">
-            <div class="card h-100">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Recent Transactions</h5>
-                    <a href="{{ route('admin.transactions.index') }}" class="btn btn-sm btn-primary">
-                        View All
-                    </a>
+        <!-- Recent Orders -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold">Recent Orders</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>User</th>
-                                    <th>Book</th>
-                                    <th>Amount</th>
-                                    <th>Date</th>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Books</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($statistics['recent_transactions'] as $transaction)
+                                @forelse($recentOrders ?? [] as $order)
                                 <tr>
-                                    <td>#{{ $transaction->id }}</td>
-                                    <td>{{ $transaction->user->name }}</td>
-                                    <td>{{ $transaction->book->title }}</td>
-                                    <td>${{ number_format($transaction->amount, 2) }}</td>
-                                    <td>{{ $transaction->created_at->format('M d, Y') }}</td>
+                                    <td>#{{ $order->id }}</td>
+                                    <td>{{ $order->user->name }}</td>
+                                    <td>{{ $order->items_count }}</td>
+                                    <td>${{ $order->total }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ $order->status_color }}">
+                                            {{ $order->status }}
+                                        </span>
+                                    </td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">No recent orders</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -97,14 +108,25 @@
             </div>
         </div>
 
-        <!-- Monthly Sales Chart -->
-        <div class="col-12 col-xl-4 mb-4">
-            <div class="card h-100">
+        <!-- Top Books -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Monthly Sales</h5>
+                    <h6 class="m-0 font-weight-bold">Top Selling Books</h6>
                 </div>
                 <div class="card-body">
-                    <canvas id="monthlySalesChart"></canvas>
+                    @forelse($topBooks ?? [] as $book)
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ $book->cover_image }}" alt="{{ $book->title }}" 
+                             class="rounded" style="width: 48px; height: 48px; object-fit: cover;">
+                        <div class="ml-3">
+                            <h6 class="mb-0 text-gray-200">{{ $book->title }}</h6>
+                            <small class="text-gray-400">{{ $book->sales_count }} sales</small>
+                        </div>
+                    </div>
+                    @empty
+                    <p class="text-center mb-0 text-gray-400">No data available</p>
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -121,44 +143,58 @@ document.addEventListener('DOMContentLoaded', function() {
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
     
-    const salesData = @json($statistics['sales_by_month']);
+    const salesData = @json($statistics['sales_by_month'] ?? []);
     const chartData = months.map((month, index) => salesData[index + 1] || 0);
     
-    const ctx = document.getElementById('monthlySalesChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: months,
-            datasets: [{
-                label: 'Sales ($)',
-                data: chartData,
-                borderColor: '#4f46e5',
-                backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                borderWidth: 2,
-                fill: true,
-                tension: 0.4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
+    if (document.getElementById('monthlySalesChart')) {
+        const ctx = document.getElementById('monthlySalesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Sales ($)',
+                    data: chartData,
+                    borderColor: '#d4af37', // amber-500
+                    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return '$' + value;
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value;
+                            },
+                            color: '#9ca3af' // gray-400
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#9ca3af' // gray-400
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
                         }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 });
 </script>
 @endpush 
